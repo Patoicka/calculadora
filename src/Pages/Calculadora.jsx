@@ -17,9 +17,6 @@ export const Calculadora = ({ nombre }) => {
     const [operation, setOperation] = useState('');
     const [isAnimatingOut, setIsAnimatingOut] = useState(false);
 
-    console.log(currentValue);
-    console.log(operation);
-
     useEffect(() => {
         if (currentValue.length > 9) {
             setCurrentValue(currentValue.substring(0, 9));

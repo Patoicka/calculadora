@@ -15,8 +15,6 @@ export const Notes = () => {
     const [note, setNote] = useState('');
     const [loader, setLoader] = useState(false);
 
-    console.log(note);
-
     const toggleSlide = () => {
         if (isAnimatingOut) {
             dispatch(setSlide(true));

@@ -9,7 +9,6 @@ export const History = () => {
 
     const { numbers, slide } = useSelector((state => state.calculator));
     const dispatch = useDispatch();
-    console.log(numbers);
     const [isAnimatingOut, setIsAnimatingOut] = useState(false);
 
 
