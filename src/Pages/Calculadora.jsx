@@ -2,96 +2,109 @@ import React, { useEffect, useState } from 'react';
 import { ButtonNumber } from '../Components/ButtonNumber';
 import { ButtonOperations } from '../Components/ButtonOperations';
 import { ButtonAction } from '../Components/ButtonAction';
-import { useDispatch } from 'react-redux';
-import { setNombre } from '../store/calculatorSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSlide, setNumbers } from '../store/calculatorSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import 'animate.css';
+import { SlideBar } from '../Components/SlideBar';
 
 export const Calculadora = ({ nombre }) => {
-
+    const { slide } = useSelector((state) => state.calculator);
     const dispatch = useDispatch();
 
     const [currentValue, setCurrentValue] = useState('0');
-    const [operator, setOperator] = useState(null);
-    const [previousValue, setPreviousValue] = useState(null);
+    const [operation, setOperation] = useState('');
+    const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+
+    console.log(currentValue);
+    console.log(operation);
 
     useEffect(() => {
         if (currentValue.length > 9) {
             setCurrentValue(currentValue.substring(0, 9));
-        };
-    }, [operator]);
+        }
+    }, [currentValue]);
 
+    const toggleSlide = () => {
+        if (isAnimatingOut) {
+            dispatch(setSlide(true));
+        } else {
+            setTimeout(() => {
+                dispatch(setSlide(false));
+            }, 500);
+        }
+    };
+
+    useEffect(() => {
+        toggleSlide();
+    }, [isAnimatingOut]);
 
     const handleNumberClick = (num) => {
         if (currentValue === '0') {
             setCurrentValue(String(num));
+            setOperation(String(num));
         } else {
-            setCurrentValue(currentValue + String(num));
+            setCurrentValue(String(num));
+            setOperation(operation + String(num));
         }
     };
 
+
     const handleOperationClick = (op) => {
-        setPreviousValue(currentValue);
-        setOperator(op);
-        setCurrentValue('0');
+        if (currentValue === 'Error') return;
+
+        setOperation(operation + ` ${op} `);
+        setCurrentValue(op);
     };
 
     const calculate = () => {
-        if (!operator || previousValue === null) return;
+        try {
+            const sanitizedOperation = operation.replace(/x/g, '*').replace(/÷/g, '/');
+            const result = eval(sanitizedOperation);
 
-        const prev = parseFloat(previousValue);
-        const current = parseFloat(currentValue);
-        let result;
+            dispatch(setNumbers({ operation, result }));
 
-        switch (operator) {
-            case '+':
-                result = prev + current;
-                break;
-            case '-':
-                result = prev - current;
-                break;
-            case 'x':
-                result = prev * current;
-                break;
-            case '÷':
-                result = current === 0 ? 'Error' : prev / current;
-                break;
-            default:
-                return;
+            setCurrentValue(String(result));
+            setOperation('');
+        } catch (error) {
+            console.log(error);
+            setCurrentValue('Error');
         }
-
-        setCurrentValue(String(result));
-        setPreviousValue(null);
-        setOperator(null);
     };
 
     const handleClear = () => {
         setCurrentValue('0');
-        setPreviousValue(null);
-        setOperator(null);
+        setOperation('');
     };
 
     const handleToggleSign = () => {
         setCurrentValue(String(parseFloat(currentValue) * -1));
+        setOperation(operation + ` * -1`);
     };
 
     const handlePercentage = () => {
         setCurrentValue(String(parseFloat(currentValue) / 100));
-    };
-
-    const goBack = () => {
-        dispatch(setNombre(''));
+        setOperation(operation + ` / 100`);
     };
 
     return (
-        <div className="h-screen w-[40%] relative mx-auto overflow-x-hidden bg-black px-2 flex flex-col justify-end pb-2">
-            <div className='absolute flex flex-col top-2'>
-                <button
-                    onClick={goBack}
-                    className='flex w-10 items-center justify-start text-xl text-white font-semibold'
-                >
-                    ← <span className='text-sm px-1 pt-1'> Regresar </span>
-                </button>
-                <span className='text-sm text-white'> <span className='text-lg font-bold'> Bienvenido </span> {nombre} </span>
+        <div className="h-screen w-[40%] border-l border-r relative overflow-x-hidden mx-auto bg-black px-3 flex flex-col justify-end py-2">
+            <div className="absolute z-20 flex w-full items-center justify-between top-2 right-0 px-3">
+                <span className="text-sm text-white">
+                    <span className="text-lg font-bold"> Bienvenido </span> {nombre}{' '}
+                </span>
+                <FontAwesomeIcon
+                    className="text-lg cursor-pointer text-white"
+                    icon={faBars}
+                    onClick={() => {
+                        setIsAnimatingOut(!isAnimatingOut);
+                    }}
+                />
             </div>
+
+            {slide && <SlideBar slide={isAnimatingOut} />}
+
             <div className="text-white text-right text-6xl p-4 mb-2">{currentValue}</div>
             <div className="grid grid-cols-4 gap-4">
                 <ButtonAction action="AC" onClick={handleClear} />

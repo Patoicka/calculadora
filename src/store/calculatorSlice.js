@@ -1,23 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    number: 0,
-    nombre: ''
+    numbers: [],
+    nombre: '',
+    option: '',
+    slide: false,
+    notes: [],
 };
 
 export const calculator = createSlice({
     name: 'calculator',
     initialState,
     reducers: {
-        setNumber: (state, action) => {
-            state.number = action.payload;
+        setNumbers: (state, action) => {
+            state.numbers = [...state.numbers, action.payload];
         },
         setNombre: (state, action) => {
             state.nombre = action.payload;
         },
+        setOption: (state, action) => {
+            state.option = action.payload;
+        },
+        setSlide: (state, action) => {
+            state.slide = action.payload;
+        },
+        setNotes: (state, action) => {
+            state.notes = [...state.notes, action.payload];
+        },
+        setDeleteNotes: (state) => {
+            state.notes = [];
+        }
     },
 });
 
-export const { setNumber, setNombre } = calculator.actions;
+export const { setNumbers, setNombre, setOption, setSlide, setNotes, setDeleteNotes } = calculator.actions;
 
 export default calculator.reducer;
