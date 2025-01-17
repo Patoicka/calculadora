@@ -19,27 +19,27 @@ export const Welcome = () => {
 
     useEffect(() => {
         dispatch(setSlide(false));
-    }, [])
+    }, []);
 
     return (
-        <div className="h-screen w-[40%] mx-auto text-white bg-black px-2">
+        <div className="h-screen w-screen mx-auto text-white bg-black px-2">
             <form className='flex flex-col h-full justify-center items-center' onSubmit={handleAddName}>
-                <h1 className="text-2xl font-bold">CALCULADORA</h1>
-                <p className="text-sm mt-6">Por favor agrega tu nombre...</p>
+                <h1 className="text-6xl font-bold">CALCULADORA</h1>
+                <p className="text-xl mt-6">Por favor agrega tu nombre...</p>
                 <input
                     type="text"
                     name="nombre"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="mt-2 p-1 px-2 rounded-lg border-2 bg-transparent text-center text-sm"
+                    className="mt-6 p-4 rounded-lg border-2 bg-transparent text-center text-lg"
                     placeholder="Escribe tu nombre"
                 />
 
-                {errorMsj && <span className='text-sm text-red-500 font-bold mt-2'> {errorMsj} </span>}
+                {errorMsj && <span className='text-red-500 font-bold mt-2'> {errorMsj} </span>}
 
                 <button
                     type='submit'
-                    className="text-sm bg-green-600 border-2 rounded-lg p-2 px-4 font-semibold mt-4 hover:border-white hover:text-white hover:bg-black"
+                    className="text-lg uppercase bg-green-600 border-2 rounded-lg p-4 font-semibold mt-6 hover:border-white hover:text-white hover:bg-black"
                 >
                     Añadir
                 </button>

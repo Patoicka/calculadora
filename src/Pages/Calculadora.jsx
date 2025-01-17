@@ -86,13 +86,13 @@ export const Calculadora = ({ nombre }) => {
     };
 
     return (
-        <div className="h-screen w-[40%] border-l border-r relative overflow-x-hidden mx-auto bg-black px-3 flex flex-col justify-end py-2">
-            <div className="absolute z-20 flex w-full items-center justify-between top-2 right-0 px-3">
-                <span className="text-sm text-white">
-                    <span className="text-lg font-bold"> Bienvenido </span> {nombre}{' '}
+        <div className="h-screen w-full border-l border-r relative overflow-x-hidden mx-auto bg-black px-10 flex flex-col justify-end py-2">
+            <div className="absolute z-20 flex w-full items-center justify-between top-2 right-0 px-10">
+                <span className="text-3xl text-white">
+                    <span className="text-6xl font-bold"> Bienvenido </span> {nombre}
                 </span>
                 <FontAwesomeIcon
-                    className="text-lg cursor-pointer text-white"
+                    className="text-4xl cursor-pointer text-white"
                     icon={faBars}
                     onClick={() => {
                         setIsAnimatingOut(!isAnimatingOut);

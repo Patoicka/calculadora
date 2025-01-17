@@ -5,6 +5,7 @@ import { Welcome } from "./Pages/Welcome";
 import { useSelector } from "react-redux";
 import { History } from "./Pages/History";
 import { Notes } from "./Pages/Notes";
+import { Equations } from "./Pages/Equations";
 
 function App() {
   const { nombre, option, numbers } = useSelector((state) => state.calculator);
@@ -17,13 +18,15 @@ function App() {
         return <History />;
       case 'notes':
         return <Notes />;
+      case 'equations':
+        return <Equations />;
       default:
         return <Calculadora nombre={nombre} />;
     }
   };
 
   return (
-    <div className="bg-black">
+    <div>
       {nombre !== '' ? selecOption() : <Welcome />}
     </div>
   );

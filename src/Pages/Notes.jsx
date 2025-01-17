@@ -51,11 +51,10 @@ export const Notes = () => {
         toggleSlide();
     }, [isAnimatingOut])
 
-
     return (
-        <div className='h-screen w-[40%] border-l border-r relative overflow-x-hidden mx-auto bg-black px-3 flex flex-col py-2'>
-            <h1 className='text-2xl uppercase text-white text-center font-bold mt-8'> Notas </h1>
-            <FontAwesomeIcon className='absolute top-4 right-4 text-lg cursor-pointer text-white' icon={faBars} onClick={() => { setIsAnimatingOut(!isAnimatingOut) }} />
+        <div className='h-screen w-full relative overflow-x-hidden mx-auto bg-black px-3 flex flex-col py-2'>
+            <h1 className='text-6xl uppercase text-white text-center font-bold mt-8'> Notas </h1>
+            <FontAwesomeIcon className='absolute top-10 right-10 text-4xl cursor-pointer text-white' icon={faBars} onClick={() => { setIsAnimatingOut(!isAnimatingOut) }} />
             {slide && <SlideBar slide={isAnimatingOut} />}
             {loader ?
                 <div class="flex items-center justify-center h-screen bg-opacity-0 bg-gray-900">
@@ -67,7 +66,7 @@ export const Notes = () => {
                     <div className='flex justify-center w-full'>
 
                         <button
-                            className='text-white bg-yellow-700 justify-center w-32 my-4 mx-4 rounded-lg p-1 border-2'
+                            className='text-white text-2xl bg-yellow-700 justify-center w-48 my-8 mx-4 rounded-lg p-3 border-2'
                             onClick={() => setNewNote(!newNote)}
                         >
                             <FontAwesomeIcon icon={faStickyNote} /> Nueva nota
@@ -77,14 +76,14 @@ export const Notes = () => {
                     {newNote &&
                         <div className='flex flex-col w-full items-center'>
                             <textarea
-                                className='w-full p-2 rounded bg-neutral-800 text-white border-2'
-                                style={{ maxHeight: "10rem" }}
+                                className='w-full p-2 rounded bg-neutral-800 text-white border-2 text-xl'
+                                style={{ maxHeight: "39rem", maxWidth: "40rem" }}
                                 onChange={(e) => (setNote(e.target.value))}
                             />
 
                             <button
                                 disabled={note === ''}
-                                className='bg-yellow-700 w-22 p-2 mt-3 rounded text-white border-2'
+                                className='text-white text-2xl bg-yellow-700 justify-center w-48 my-8 mx-4 rounded-lg p-3 border-2'
                                 onClick={saveNote}
                             >
                                 <FontAwesomeIcon icon={faSave} /> Agregar
@@ -97,9 +96,9 @@ export const Notes = () => {
                             <tbody className='overflow-y-auto'>
                                 {notes.map((note, index) => {
                                     return (
-                                        <div className='mb-5'>
-                                            <h1 className='text-white text-xl font-bold'> Nota {index + 1} </h1>
-                                            <p className='text-white' > {note} </p>
+                                        <div className='mb-5 w-full px-20'>
+                                            <h1 className='text-white text-4xl font-bold'> Nota {index + 1} </h1>
+                                            <p className='text-white text-xl' > {note} </p>
                                         </div>
                                     )
                                 })}
@@ -107,12 +106,17 @@ export const Notes = () => {
                         </table>
                     </div>
 
-                    <button
-                        onClick={deleteNotes}
-                        className='bg-yellow-700 w-22 p-2 mt-3 mx-12 rounded text-white border-2'
-                    >
-                        Borrar notas
-                    </button>
+                    {
+                        !newNote &&
+                        <div className='flex w-full justify-center'>
+                            <button
+                                onClick={deleteNotes}
+                                className='text-white text-2xl bg-yellow-700 justify-center w-48 my-8 mx-4 rounded-lg p-3 border-2'
+                            >
+                                Borrar notas
+                            </button>
+                        </div>
+                    }
 
                 </>
             }

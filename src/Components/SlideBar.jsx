@@ -1,4 +1,4 @@
-import { faArrowLeft, faCalculator, faClockRotateLeft, faStickyNote } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faCalculator, faClockRotateLeft, faStickyNote, faSubscript } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { useDispatch } from 'react-redux'
@@ -20,6 +20,10 @@ export const SlideBar = ({ slide }) => {
         dispatch(setOption('notes'));
     };
 
+    const goEquations = () => {
+        dispatch(setOption('equations'));
+    };
+
     const goBack = () => {
         dispatch(setOption(''));
         dispatch(setNombre(''));
@@ -27,36 +31,41 @@ export const SlideBar = ({ slide }) => {
 
     return (
         <div
-            className={`absolute bg-neutral-800 text-white top-0 right-0 w-28 h-full py-10 px-2 
+            className={`absolute bg-neutral-800 text-white top-0 right-0 w-80 h-full py-10 px-2 
                            ${slide
                     ? 'animate__animated animate__bounceInRight'
                     : 'animate__animated animate__bounceOutRight'
                 }`}
         >
-            <div className='flex flex-col h-full justify-between text-sm font-semibold'>
-                <div className='mt-3'>
+            <div className='flex flex-col h-full justify-between text-sm font-semibold top-0 absolute py-7 px-2'>
+                <div>
                     <h1
-                        className='flex items-center cursor-pointer my-3'
+                        className='flex items-center cursor-pointer mb-10 text-xl'
                         onClick={goCalculator}
                     >
-                        <FontAwesomeIcon className='pr-1' icon={faCalculator} /> Calculadora
+                        <FontAwesomeIcon className='pr-3' icon={faCalculator} /> Calculadora
                     </h1>
                     <h1
-                        className='flex items-center cursor-pointer my-3'
+                        className='flex items-center cursor-pointer my-10 text-xl'
                         onClick={goHistory}
                     >
-                        <FontAwesomeIcon className='pr-1' icon={faClockRotateLeft} /> Historial
+                        <FontAwesomeIcon className='pr-3' icon={faClockRotateLeft} /> Historial
                     </h1>
                     <h1
-                        className='flex items-center cursor-pointer my-3'
+                        className='flex items-center cursor-pointer my-10 text-xl'
                         onClick={goNotes}
-                    > <FontAwesomeIcon className='pr-1' icon={faStickyNote} /> Notas
+                    > <FontAwesomeIcon className='pr-3' icon={faStickyNote} /> Notas
+                    </h1>
+                    <h1
+                        className='flex items-center cursor-pointer my-10 text-xl'
+                        onClick={goEquations}
+                    > <FontAwesomeIcon className='pr-3' icon={faSubscript} /> Fórmulas
                     </h1>
                 </div>
                 <h1
-                    className='flex items-center cursor-pointer'
+                    className='flex items-center cursor-pointer text-xl'
                     onClick={goBack}
-                > <FontAwesomeIcon className='pr-1' icon={faArrowLeft} /> Reiniciar
+                > <FontAwesomeIcon className='pr-3' icon={faArrowLeft} /> Reiniciar
                 </h1>
             </div>
         </div>
